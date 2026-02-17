@@ -1,6 +1,8 @@
 import { Snail } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import { axiosInstance } from "../lib/axios";
 const SignUpPage = () => {
   const [signupData, setSignupData] = useState({
     fullName: "",
@@ -8,8 +10,19 @@ const SignUpPage = () => {
     password: "",
   });
 
+  const queryClient = useQueryClient();
+
+  const {mutate, isPending, error}= useMutation({
+    mutationFn: async ()=>{
+      const response = await axiosInstance.post("/auth/signup", signupData);
+      return response.data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({querykey: ["authUser"]}),
+  });
+
   const handleSignup = (e) => {
     e.preventDefault();
+    mutate()
   };
 
   return (
@@ -28,9 +41,17 @@ const SignUpPage = () => {
               Streamify
             </span>
           </div>
+          {/* error message */}
 
+          {error && (
+            <div className="alert alert-error mb-4">
+              <span className="text-base font-bold ">{error.response.data.message}</span>
+            </div>
+          )
+
+          }
           <div className="w-full ">
-            <from onSubmit={handleSignup}>
+            <form onSubmit={handleSignup}>
               <div className="space-y-4">
                 <div>
                   <h2 className="text-xl font-semibold">Create an Account </h2>
@@ -38,8 +59,9 @@ const SignUpPage = () => {
                     Join Streamify and start your language learning adventure!
                   </p>
                 </div>
-
+                
                 <div className="space-y-3">
+                  {/* fullName */}
                   <div className="form-control w-full">
                     <label className="label">
                       <span className="label-text">Full Name</span>
@@ -49,7 +71,7 @@ const SignUpPage = () => {
                       className="input input-bordered w-full"
                       placeholder="Aman Singh"
                       value={signupData.fullName}
-                      onChange={(e) => ({
+                      onChange={(e) => setSignupData({
                         ...signupData,
                         fullName: e.target.value,
                       })}
@@ -66,7 +88,7 @@ const SignUpPage = () => {
                       className="input input-bordered w-full"
                       placeholder="aman@gmail.com"
                       value={signupData.email}
-                      onChange={(e) => ({
+                      onChange={(e) => setSignupData({
                         ...signupData,
                         email: e.target.value,
                       })}
@@ -83,7 +105,7 @@ const SignUpPage = () => {
                       className="input input-bordered w-full"
                       placeholder="******"
                       value={signupData.password}
-                      onChange={(e) => ({
+                      onChange={(e) =>setSignupData ({
                         ...signupData,
                         password: e.target.value,
                       })}
@@ -93,7 +115,14 @@ const SignUpPage = () => {
                   </div>
                 </div>
 
-                <button className="btn btn-primary w-full" type="submi">Create Account</button>
+                <button className="btn btn-primary w-full" type="submit">
+                  {isPending ? (
+                    <>
+                      <span className="loading loading-spinner loading-xs"></span>
+                      Loading...
+                    </>
+                  ):("Create Account")}
+                  </button>
 
                 <div className="text-center mt-4">
                   <p className="text-sm">
@@ -101,7 +130,7 @@ const SignUpPage = () => {
                   </p>
                 </div>
               </div>
-            </from>
+            </form>
           </div>
         </div>
 
@@ -109,7 +138,7 @@ const SignUpPage = () => {
         <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
         <div className="max-w-md p-8">
           <div className="relative aspect-square max-w-sm mx-auto">
-            <img src="../../public/V.png" alt="Language connection illustration" className="w-full h-full" />
+            <img src="/V.png" alt="Language connection illustration" className="w-full h-full" />
           </div>
 
           <div className="text-center space-y-3 mt-6">

@@ -17,11 +17,11 @@ export const signup = async (req, res) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ mesage: "invalid email format" });
+      return res.status(400).json({ message: "Invalid email format" });
     }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "email already exists" });
+      return res.status(400).json({ message: "Email already exists" });
     }
     const idx = Math.floor(Math.random() * 100) + 1; // generate a num between 1-100
     const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
@@ -58,7 +58,7 @@ export const signup = async (req, res) => {
     res.status(201).json({ success: true, user: newUser });
   } catch (error) {
     console.log("error in signup cotroller", error);
-    res.status(500).json({ message: "internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
