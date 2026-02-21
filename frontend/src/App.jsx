@@ -20,7 +20,7 @@ const App = () => {
   if (isLoading) return <PageLoader />;
 
   return (
-    <div data-theme="forest"className="h-screen">
+    <div data-theme="coffee"className="h-screen">
       <Routes>
         <Route
           path="/"
@@ -57,7 +57,7 @@ const App = () => {
         <Route
           path="/onboarding"
           element={
-            isAuthenticated ? <OnboardingPage /> : <Navigate to="/login" />
+            isAuthenticated ? !isOnboaded ? ( <OnboardingPage /> ): (<Navigate to="/" />):(<Navigate to="/login"/>)
           }
         />
       </Routes>
