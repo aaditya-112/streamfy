@@ -134,7 +134,7 @@ const SignUpPage = () => {
           </div>
         </div>
 
-        {/* rignt side */}
+        {/* right side */}
         <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
         <div className="max-w-md p-8">
           <div className="relative aspect-square max-w-sm mx-auto">
