@@ -2,8 +2,13 @@
 import { axiosInstance } from "./axios";
 
 export const getAuthUser = async ()=>{
-    const res = await axiosInstance.get("/auth/me");
+    try {
+        const res = await axiosInstance.get("/auth/me");
     return res.data;
+    } catch (error) {
+        console.log("error in getAuthUser:", error);
+        return null;
+    }
 };
 
 export const completeOnboarding = async(userData)=>{
