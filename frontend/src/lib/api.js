@@ -28,7 +28,7 @@ export const logout =async()=>{
 
 export async function getUserFriends() {
     const response = await axiosInstance.get("/users/friends");
-
+    console.log(response);
     return response.data;
 
 }
@@ -54,6 +54,6 @@ export const acceptFriendRequest=async(requestId)=> {
 }
 export const getFriendRequests= async()=>{
     const response = await axiosInstance.get("/users/friend-requests");
-    console.log(response);
+    // console.log(response);
     return response.data;
 }

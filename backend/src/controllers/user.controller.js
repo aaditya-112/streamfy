@@ -25,7 +25,7 @@ export async function getRecommendedUsers(req, res){
 
 export async function getMyFriends(req, res){
     try {
-        const user = await User.findById(req.user.id).select("friends").populate("friends", "fullName profilePic nativeLaguage learingLanguage");
+        const user = await User.findById(req.user.id).select("friends").populate("friends", "fullName profilePic nativeLanguage learningLanguage");
 
         res.status(200).json(user.friends);
     } catch (error) {
@@ -114,19 +114,19 @@ export async function acceptFriendRequest(req, res){
  
 export async function getFriendRequest(req, res){
     try {
-        console.log(req.user.id)
+        // console.log(req.user.id)
        const incomingReqs = await FriendRequest.find({
         recipient: req.user.id,
 
-        status:"accepted",
+        status:"pending",
 
-       }).populate("sender", "fullName profilepic nativeLanguage learingLanguage");
+       }).populate("sender", "fullName profilePic nativeLanguage learningLanguage");
 
        const acceptedReqs = await FriendRequest.find({
         sender: req.user.id,
         status:"accepted",
 
-       }).populate("recipient", "fullname profilePic");
+       }).populate("recipient", "fullName profilePic");
        
        res.status(200).json({incomingReqs, acceptedReqs})
     } catch (error) {
@@ -141,7 +141,7 @@ export async function getOutgoingFriendReqs(req, res){
             sender: req.user.id,
             status:"pending",
         }).populate("recipient", "fullName profilePic nativeLanguage learingLanguage");
-        console.log(outgoingRequests);
+        // console.log(outgoingRequests);
         res.status(200).json(outgoingRequests);
     } catch (error) {
         console.log("error in getOutgoingFriendReqs controller", error.message);
