@@ -63,6 +63,7 @@ const ChatPage = () => {
   },[tokenData, authUser, targetUserId]);
 
   const handleVideoCall =()=>{
+    console.log("working");
     if(channel){
       const callUrl = `${window.location.origin}/call/${channel.id}`;
 
@@ -79,7 +80,7 @@ const ChatPage = () => {
       <Chat client={chatClient}>
         <Channel channel={channel}>
           <div className='w-full relative'>
-            <CallButton handelVideoCall ={handleVideoCall}/>
+            <CallButton handleVideoCall ={handleVideoCall}/>
             <Window>
               <ChannelHeader/>
               <MessageList/>
