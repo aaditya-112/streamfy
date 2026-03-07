@@ -18,7 +18,7 @@ const _dirname = path.resolve();
 
 app.use(
     cors({
-        origin:"https://streamfy-alpha.vercel.app/api",
+        origin:"https://streamfy-alpha.vercel.app/",
         credentials: true,// allow frontend to send cookies
     })
 );
