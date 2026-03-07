@@ -18,7 +18,7 @@ const _dirname = path.resolve();
 
 app.use(
     cors({
-        origin:"http://localhost:5173",
+        origin:"https://streamfy-alpha.vercel.app/api",
         credentials: true,// allow frontend to send cookies
     })
 );
