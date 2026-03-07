@@ -16,9 +16,15 @@ const PORT = process.env.PORT;
 
 const _dirname = path.resolve();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://streamfy-alpha.vercel.app",
+  "https://streamify-jwia.onrender.com"
+];
+
 app.use(
     cors({
-        origin:"http://localhost:5173",
+        origin:allowedOrigins,
         credentials: true,// allow frontend to send cookies
     })
 );
